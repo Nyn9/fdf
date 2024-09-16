@@ -6,7 +6,7 @@
 /*   By: nferrad <nferrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 16:41:33 by nferrad           #+#    #+#             */
-/*   Updated: 2024/09/16 03:46:12 by nferrad          ###   ########.fr       */
+/*   Updated: 2024/09/16 19:45:07 by nferrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # define WIDTH		900
 # define HEIGHT		900
-# define ZOOM 		10
+# define ZOOM 		5
 
 # define ERR_FMT	"\033[0;31m\x1b[1mError :\033[0m Wrong format !\x1b[30m \
 Try \"./fdf <filename>.fdf\".\033[0m"
@@ -64,12 +64,19 @@ typedef struct s_img
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		map_size;
 }				t_img;
+
+typedef struct s_fdf
+{
+	t_img	*img;
+	t_mlx	*mlx;
+}				t_fdf;
 
 t_point	*get_point(char *file);
 void	free_lst(t_point **lst);
 void	put_pixel(t_img *img, int x, int y, int color);
-int		check_map(char *file);
+int		check_map(char *file/*, t_img *data*/);
 void	draw_fdf(t_img *data, t_mlx *mlx);
 
 #endif

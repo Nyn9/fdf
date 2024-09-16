@@ -6,30 +6,28 @@
 /*   By: nferrad <nferrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 19:11:01 by nferrad           #+#    #+#             */
-/*   Updated: 2024/09/16 03:35:47 by nferrad          ###   ########.fr       */
+/*   Updated: 2024/09/16 19:45:20 by nferrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	parse_map(char *line)
+int	parse_map(char **lines)
 {
 	int	i;
-	int	nb;
 
 	i = 0;
-	nb = 0;
-	while (line[i])
+	while (lines[i])
 	{
-		if (ft_isdigit(line[i]) && !ft_isdigit(line[i + 1])
-			&& line[i + 1] != ',')
-			nb++;
+		free(lines[i]);
+		lines[i] = NULL;
 		i++;
 	}
-	return (nb);
+	free(lines);
+	return (i);
 }
 
-int	check_map(char *file)
+int	check_map(char *file/*, t_img *data*/)
 {
 	int		fd;
 	char	*line;
@@ -37,22 +35,21 @@ int	check_map(char *file)
 	int		width;
 	int		nb;
 
+	nb = 0;
+	height = 0;
 	fd = open(file, O_RDONLY);
 	line = get_next_line(fd);
-	height = 0;
-	nb = 0;
+	width = parse_map(ft_split(line, ' '));
 	while (line != NULL)
 	{
-		nb += parse_map(line);
-		if (!height)
-			width = nb;
+		nb += parse_map(ft_split(line, ' '));
 		height++;
 		free(line);
 		line = get_next_line(fd);
 	}
 	free(line);
 	close(fd);
-	if (height * width == nb && nb != 0)
+	if (height * width == nb && nb)
 		return (1);
 	return (0);
 }
@@ -83,6 +80,7 @@ void	fill_point(char **line, t_point **point)
 	static int	y = 0;
 	int			x;
 
+	x = 0;
 	while (line[x])
 	{
 		new_point(point, x, y, ft_atoi(line[x]));
@@ -102,7 +100,7 @@ t_point	*get_point(char *file)
 
 	point = NULL;
 	fd = open(file, O_RDONLY);
-	if (fd == -1)
+	if (fd < 0)
 		return (NULL);
 	line = get_next_line(fd);
 	while (line != NULL)
@@ -111,5 +109,7 @@ t_point	*get_point(char *file)
 		free(line);
 		line = get_next_line(fd);
 	}
+	free(line);
+	close(fd);
 	return (point);
 }
