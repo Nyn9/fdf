@@ -6,7 +6,7 @@
 /*   By: nferrad <nferrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 19:11:01 by nferrad           #+#    #+#             */
-/*   Updated: 2024/09/16 19:45:20 by nferrad          ###   ########.fr       */
+/*   Updated: 2024/09/17 13:46:26 by nferrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,31 +27,33 @@ int	parse_map(char **lines)
 	return (i);
 }
 
-int	check_map(char *file/*, t_img *data*/)
+int	check_map(char *file)
 {
 	int		fd;
 	char	*line;
-	int		height;
-	int		width;
+	int		nb_prev;
 	int		nb;
+	int lines = 0;
 
 	nb = 0;
-	height = 0;
+	nb_prev = 0;
 	fd = open(file, O_RDONLY);
 	line = get_next_line(fd);
-	width = parse_map(ft_split(line, ' '));
-	while (line != NULL)
+	while (line)
 	{
-		nb += parse_map(ft_split(line, ' '));
-		height++;
+		lines++;
+		nb = parse_map(ft_split(line, ' '));
 		free(line);
+		ft_printf("ligne : %d /// nb : %d /// nb_prev : %d\n", lines, nb, nb_prev);
+		if (nb_prev != nb && nb_prev)
+			break ;
+		nb_prev = nb;
 		line = get_next_line(fd);
 	}
-	free(line);
+	// free(line);
 	close(fd);
-	if (height * width == nb && nb)
-		return (1);
-	return (0);
+	// ft_printf("nb : %d /// Height : %d /// Width : %d\n", nb, height, width);
+	return (1);
 }
 
 void	new_point(t_point **point, int x, int y, int z)

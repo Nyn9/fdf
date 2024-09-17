@@ -6,7 +6,7 @@
 /*   By: nferrad <nferrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 11:34:58 by nferrad           #+#    #+#             */
-/*   Updated: 2024/09/16 19:45:33 by nferrad          ###   ########.fr       */
+/*   Updated: 2024/09/17 13:49:41 by nferrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ int	main(int argc, char **argv)
 		ft_printf(ERR_FMT"\n");
 		return (-1);
 	}
-	else if (!check_map(argv[1]/*, &img*/))
-	{
-		ft_printf(ERR_FILE"\n");
-		return (-1);
-	}
+	// else if (!check_map(argv[1]/*, &img*/))
+	// {
+	// 	ft_printf(ERR_FILE"\n");
+	// 	return (-1);
+	// }
 	fdf = malloc(sizeof(t_fdf));
 	mlx = malloc(sizeof(t_mlx));
 	fdf->mlx = mlx;

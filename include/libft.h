@@ -6,7 +6,7 @@
 /*   By: nferrad <nferrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:29:52 by nferrad           #+#    #+#             */
-/*   Updated: 2024/09/01 17:26:35 by nferrad          ###   ########.fr       */
+/*   Updated: 2024/09/17 14:39:14 by nferrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int		ft_printstr(const char *str);
 /* Get_next_line */
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
+#  define BUFFER_SIZE 1
 # endif
 
 char	*get_next_line(int fd);

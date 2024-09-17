@@ -6,7 +6,7 @@
 /*   By: nferrad <nferrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 16:16:21 by nferrad           #+#    #+#             */
-/*   Updated: 2024/08/03 20:31:34 by nferrad          ###   ########.fr       */
+/*   Updated: 2024/09/17 14:40:30 by nferrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*get_next_line(int fd)
 	free(buf);
 	if (!res)
 		return (NULL);
-	stash[fd] = clean_line(res);
+	// stash[fd] = clean_line(res);
 	return (res);
 }
 

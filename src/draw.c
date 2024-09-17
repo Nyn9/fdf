@@ -6,7 +6,7 @@
 /*   By: nferrad <nferrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 21:39:56 by nferrad           #+#    #+#             */
-/*   Updated: 2024/09/16 03:52:41 by nferrad          ###   ########.fr       */
+/*   Updated: 2024/09/17 13:57:31 by nferrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_line	*set_vertical(t_point *point)
 		if (next_point->next)
 			next_point = next_point->next;
 		else
-			break ;
+			return (NULL);
 	}
 	line = malloc(sizeof(t_line));
 	pixel = set_iso(point);

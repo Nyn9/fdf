@@ -26,7 +26,7 @@ $(NAME): ${OBJS}
 	printf "$(ERASE)$(CYAN)$(BOLD)$@$(RESET) $(GREEN)created!\n$(RESET)"
 
 %.o: %.c
-	${CC} -I. -c $< -o $@
+	${CC} -I../include -c $< -o $@
 	printf "$(ERASE)$(BLUE) > Compilation: $(RESET) $<"
 
 clean:

@@ -39,4 +39,8 @@ fclean: clean
 
 re: fclean all
 
+debug: $(OBJ)
+	make -C $(LIBPATH) --no-print-directory
+	$(CC) $(CFLAGS) -g $(OBJ) $(LIBPATH)/$(LIBFT) -o $(NAME) $(MLXFLAGS)
+
 .PHONY: all clean fclean re
