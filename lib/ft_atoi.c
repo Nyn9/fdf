@@ -3,13 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nferrad <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: nferrad <nferrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:16:19 by nferrad           #+#    #+#             */
-/*   Updated: 2024/05/22 16:16:22 by nferrad          ###   ########.fr       */
+/*   Updated: 2024/09/17 20:38:13 by nferrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
+static int ft_isdigit(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
 
 int	ft_atoi(const char *str)
 {
@@ -28,7 +34,11 @@ int	ft_atoi(const char *str)
 			sign *= -1;
 		i++;
 	}
+	if (!ft_isdigit(str[i]))
+		return (0);
 	while (str[i] >= '0' && str[i] <= '9')
+	{
 		result = result * 10 + str[i++] - '0';
+	}
 	return (result * sign);
 }

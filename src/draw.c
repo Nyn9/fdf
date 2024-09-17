@@ -6,7 +6,7 @@
 /*   By: nferrad <nferrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 21:39:56 by nferrad           #+#    #+#             */
-/*   Updated: 2024/09/17 13:57:31 by nferrad          ###   ########.fr       */
+/*   Updated: 2024/09/17 20:59:39 by nferrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	draw_fdf(t_img *data, t_mlx *mlx)
 	{
 		put_lines(data, set_horizontal(point));
 		put_lines(data, set_vertical(point));
-		mlx_put_image_to_window(mlx->mlx, mlx->win, data->img, 0, 0);
 		point = point->next;
 	}
+	mlx_put_image_to_window(mlx->mlx, mlx->win, data->img, 0, 0);
 }

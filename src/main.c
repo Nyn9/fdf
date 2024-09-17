@@ -6,11 +6,17 @@
 /*   By: nferrad <nferrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 11:34:58 by nferrad           #+#    #+#             */
-/*   Updated: 2024/09/17 13:49:41 by nferrad          ###   ########.fr       */
+/*   Updated: 2024/09/17 20:35:59 by nferrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	error(const char *error_msg)
+{
+	ft_printf("%s\n", error_msg);
+	exit(-1);
+}
 
 int	check_file_format(char *filename)
 {
@@ -50,15 +56,7 @@ int	main(int argc, char **argv)
 	t_fdf	*fdf;
 
 	if (argc != 2 || !check_file_format(argv[1]))
-	{
-		ft_printf(ERR_FMT"\n");
-		return (-1);
-	}
-	// else if (!check_map(argv[1]/*, &img*/))
-	// {
-	// 	ft_printf(ERR_FILE"\n");
-	// 	return (-1);
-	// }
+		error(ERR_FMT);
 	fdf = malloc(sizeof(t_fdf));
 	mlx = malloc(sizeof(t_mlx));
 	fdf->mlx = mlx;
@@ -69,6 +67,11 @@ int	main(int argc, char **argv)
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 			&img.endian);
 	mlx->points = get_point(argv[1]);
+	if (!mlx->points)
+	{
+		error(ERR_FILE);
+		close_window(fdf);
+	}
 	draw_fdf(&img, mlx);
 	mlx_key_hook(mlx->win, key_pressed, fdf);
 	mlx_loop(mlx->mlx);
