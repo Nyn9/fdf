@@ -6,7 +6,7 @@
 /*   By: nferrad <nferrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 19:11:01 by nferrad           #+#    #+#             */
-/*   Updated: 2024/09/17 21:16:01 by nferrad          ###   ########.fr       */
+/*   Updated: 2024/09/18 19:13:16 by nferrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,12 @@ int	fill_point(char **line, t_point **point)
 	return_value = 1;
 	while (line[x])
 	{
-		new_point(point, x, y, ft_atoi(line[x]));
-		if (!ft_atoi(line[x]) && line[x][0] != '0' && line[x][0] != '\n')
-			return_value = 0;
+		if (return_value)
+		{
+			new_point(point, x, y, ft_atoi(line[x]));
+			if (!ft_atoi(line[x]) && line[x][0] != '0' && line[x][0] != '\n')
+				return_value = 0;
+		}
 		free(line[x]);
 		line[x] = NULL;
 		x++;
@@ -98,16 +101,14 @@ int	fill_point(char **line, t_point **point)
 	return (return_value);
 }
 
-t_point	*get_point(char *file)
+t_point	*get_point(int fd)
 {
 	t_point	*point;
 	char	*line;
-	int		fd;
 	int		error;
 
 	error = 0;
 	point = NULL;
-	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
 	line = get_next_line(fd);
@@ -121,6 +122,9 @@ t_point	*get_point(char *file)
 	free(line);
 	close(fd);
 	if (error)
-		return (NULL);
+	{
+		free_lst(&point);
+		return (0);
+	}
 	return (point);
 }

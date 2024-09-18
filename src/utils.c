@@ -6,7 +6,7 @@
 /*   By: nferrad <nferrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 20:07:18 by nferrad           #+#    #+#             */
-/*   Updated: 2024/09/16 03:50:46 by nferrad          ###   ########.fr       */
+/*   Updated: 2024/09/18 18:58:23 by nferrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@ void	free_lst(t_point **lst)
 		*lst = (*lst)->next;
 		free(tmp);
 	}
+}
+
+int	length(char **str)
+{
+	int	len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
 }
 
 void	put_pixel(t_img *img, int x, int y, int color)

@@ -6,7 +6,7 @@
 /*   By: nferrad <nferrad@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 11:34:58 by nferrad           #+#    #+#             */
-/*   Updated: 2024/09/17 20:35:59 by nferrad          ###   ########.fr       */
+/*   Updated: 2024/09/18 19:16:48 by nferrad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	error(const char *error_msg)
 {
 	ft_printf("%s\n", error_msg);
-	exit(-1);
 }
 
 int	check_file_format(char *filename)
@@ -30,7 +29,7 @@ int	check_file_format(char *filename)
 	return (0);
 }
 
-void	close_window(t_fdf *fdf)
+void	close_window(t_fdf *fdf, int is_error)
 {
 	mlx_destroy_image(fdf->mlx->mlx, fdf->img->img);
 	mlx_destroy_window(fdf->mlx->mlx, fdf->mlx->win);
@@ -39,13 +38,15 @@ void	close_window(t_fdf *fdf)
 	free(fdf->mlx->mlx);
 	free(fdf->mlx);
 	free(fdf);
-	exit(EXIT_SUCCESS);
+	if (is_error)
+		error(ERR_FILE);
+	exit(-1);
 }
 
 int	key_pressed(int keycode, t_fdf *fdf)
 {
 	if (keycode == 65307)
-		close_window(fdf);
+		close_window(fdf, 0);
 	return (0);
 }
 
@@ -56,7 +57,10 @@ int	main(int argc, char **argv)
 	t_fdf	*fdf;
 
 	if (argc != 2 || !check_file_format(argv[1]))
+	{
 		error(ERR_FMT);
+		exit(-1);
+	}
 	fdf = malloc(sizeof(t_fdf));
 	mlx = malloc(sizeof(t_mlx));
 	fdf->mlx = mlx;
@@ -66,12 +70,9 @@ int	main(int argc, char **argv)
 	img.img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 			&img.endian);
-	mlx->points = get_point(argv[1]);
+	mlx->points = get_point(open(argv[1], O_RDONLY));
 	if (!mlx->points)
-	{
-		error(ERR_FILE);
-		close_window(fdf);
-	}
+		close_window(fdf, 1);
 	draw_fdf(&img, mlx);
 	mlx_key_hook(mlx->win, key_pressed, fdf);
 	mlx_loop(mlx->mlx);
